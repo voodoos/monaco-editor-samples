@@ -45,7 +45,7 @@ import 'monaco-editor/esm/vs/editor/contrib/find/findController.js';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
 
 // (2) Desired languages:
-// import 'monaco-editor/esm/vs/language/typescript/monaco.contribution';
+import 'monaco-editor/esm/vs/language/typescript/monaco.contribution';
 // import 'monaco-editor/esm/vs/language/css/monaco.contribution';
 // import 'monaco-editor/esm/vs/language/json/monaco.contribution';
 // import 'monaco-editor/esm/vs/language/html/monaco.contribution';
@@ -73,7 +73,7 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
 // import 'monaco-editor/esm/vs/basic-languages/postiats/postiats.contribution.js';
 // import 'monaco-editor/esm/vs/basic-languages/powershell/powershell.contribution.js';
 // import 'monaco-editor/esm/vs/basic-languages/pug/pug.contribution.js';
-import 'monaco-editor/esm/vs/basic-languages/python/python.contribution.js';
+// import 'monaco-editor/esm/vs/basic-languages/python/python.contribution.js';
 // import 'monaco-editor/esm/vs/basic-languages/r/r.contribution.js';
 // import 'monaco-editor/esm/vs/basic-languages/razor/razor.contribution.js';
 // import 'monaco-editor/esm/vs/basic-languages/redis/redis.contribution.js';
@@ -93,35 +93,27 @@ import 'monaco-editor/esm/vs/basic-languages/python/python.contribution.js';
 self.MonacoEnvironment = {
 	getWorker: function (moduleId, label) {
 		if (label === 'json') {
-			return new Worker('../node_modules/monaco-editor/esm/vs/language/json/json.worker')
+			return new Worker('./workers/json.worker.js')
 		}
 		if (label === 'css') {
-			return new Worker('../node_modules/monaco-editor/esm/vs/language/css/css.worker')
+			return new Worker('./workers/css.worker.js')
 		}
 		if (label === 'html') {
-			return new Worker('../node_modules/monaco-editor/esm/vs/language/html/html.worker')
+			return new Worker('./workers/html.worker.js')
 		}
 		if (label === 'typescript' || label === 'javascript') {
-			return new Worker('../node_modules/monaco-editor/esm/vs/language/typescript/ts.worker')
+			return new Worker('./workers/ts.worker.js')
 		}
-		return new Worker('../node_modules/monaco-editor/esm/vs/editor/editor.worker')
+		return new Worker('./workers/editor.worker.js')
 	}
 }
 
 monaco.editor.create(document.getElementById('container'), {
 	value: [
-		'from banana import *',
-		'',
-		'class Monkey:',
-		'	# Bananas the monkey can eat.',
-		'	capacity = 10',
-		'	def eat(self, N):',
-		'		\'\'\'Make the monkey eat N bananas!\'\'\'',
-		'		capacity = capacity - N*banana.size',
-		'',
-		'	def feeding_frenzy(self):',
-		'		eat(9.25)',
-		'		return "Yum yum"',
+		'const btn = document.getElementById(\'button\');',
+		'btn.addEventListener(\'click\', function() {',
+		'	alert(\'Hello World!\');',
+		'});'
 	].join('\n'),
-	language: 'python'
+	language: 'javascript'
 });
